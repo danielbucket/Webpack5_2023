@@ -1,8 +1,9 @@
 import Selfi from './selfi.jpg';
+import altText from './altText.txt';
 
 function addImage() {
 	const image = document.createElement('img');
-		image.alt = 'Selfi';
+		image.alt = altText;
 		image.width = 300;
 		image.src = Selfi;
 
