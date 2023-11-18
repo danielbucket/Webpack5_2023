@@ -8,4 +8,13 @@ module.exports = {
 	},
 	
 	mode: 'none',
+
+	module: {
+		rules: [
+			{
+				test: /\.(png|jpg)$/,
+				type: 'asset/resource',
+			},
+		],
+	},
 };
