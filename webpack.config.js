@@ -1,11 +1,15 @@
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
+const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const path = require('path');
 
 module.exports = {
 	entry: './src/index.js',
 	output: {
-		filename: 'bundle.js',
+		filename: 'bundle.[contenthash].js',
 		path: path.resolve(__dirname, './dist'),
-		publicPath: 'dist/',
+		publicPath: '',
 	},
 	
 	mode: 'none',
@@ -28,13 +32,13 @@ module.exports = {
 			{
 				test: /\.css$/,
 				use: [
-					'style-loader', 'css-loader'
+					MiniCssExtractPlugin.loader, 'css-loader'
 				],
 			},
 			{
 				test: /\.scss$/,
 				use: [
-					'style-loader', 'css-loader', 'sass-loader'
+					MiniCssExtractPlugin.loader, 'css-loader', 'sass-loader'
 				],
 			},
 			{
@@ -48,6 +52,24 @@ module.exports = {
 					},
 				},
 			},
+			{
+				test: /\.hbs$/,
+				use: [
+					'handlebars-loader'
+				],
+			},
 		],
 	},
+		plugins: [
+			new TerserPlugin(),
+			new MiniCssExtractPlugin({
+				filename: 'styles.[contenthash].css',
+			}),
+			new CleanWebpackPlugin(),
+			new HtmlWebpackPlugin({
+				title: 'Yolo, mafk!',
+				template: 'src/index.hbs',
+				description: 'Some description'
+			}),
+		],
 };
